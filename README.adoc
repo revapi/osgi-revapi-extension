@@ -1,0 +1,35 @@
+== OSGi Revapi Extension
+
+This library can be used to teach Revapi understand the OSGi bundle definitions.
+
+It understands the `Export-Package` directive in jar files' manifests and will automatically exclude all elements
+that are not exported from analysis.
+
+=== Usage
+
+With Revapi Maven plugin:
+
+```xml
+
+<build>
+  <plugins>
+    <plugin>
+      <groupId>org.revapi</groupId>
+      <artifactId>revapi-maven-plugin</artifactId>
+      <version>...</version>
+      <dependencies>
+        <dependency>
+          <groupId>org.revapi</groupId>
+          <artifactId>revapi-java</artifactId>
+          <version>...</version>
+        </dependency>
+        <dependency>
+          <groupId>org.revapi</groupId>
+          <artifactId>osgi-revapi-extensions</artifactId>
+          <version>...</version>
+        </dependency>
+      </dependencies>
+      ...
+```
+
+For more information on how to use Revapi, see https://revapi.org and https://github.com/revapi/revapi.
