@@ -25,7 +25,7 @@ With Revapi Maven plugin:
         </dependency>
         <dependency>
           <groupId>org.revapi</groupId>
-          <artifactId>osgi-revapi-extensions</artifactId>
+          <artifactId>osgi-revapi-extension</artifactId>
           <version>...</version>
         </dependency>
       </dependencies>
