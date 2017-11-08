@@ -1,23 +1,23 @@
 package org.revapi.osgi;
 
-import org.revapi.*;
-import org.revapi.java.spi.JavaModelElement;
-import org.revapi.java.spi.JavaTypeElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
-import javax.lang.model.element.PackageElement;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
-import java.util.regex.Pattern;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.emptySet;
+import org.revapi.API;
+import org.revapi.AnalysisContext;
+import org.revapi.Archive;
+import org.revapi.Element;
+import org.revapi.ElementFilter;
+import org.revapi.java.spi.JavaTypeElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class ExportPackageFilter implements ElementFilter {
 
@@ -37,7 +37,7 @@ public final class ExportPackageFilter implements ElementFilter {
         return null;
     }
 
-    public void initialize(@Nonnull AnalysisContext analysisContext) {
+    public void initialize(AnalysisContext analysisContext) {
         exportedPackages = new HashMap<>();
         Function<API, Set<ExportPackageDefinition>> getExportedPackages = api -> {
             Set<ExportPackageDefinition> exportedPackages = new HashSet<>();

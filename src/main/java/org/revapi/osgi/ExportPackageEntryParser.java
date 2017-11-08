@@ -1,13 +1,13 @@
 package org.revapi.osgi;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 final class ExportPackageEntryParser {
     private static final Pattern COMMA = Pattern.compile(",");

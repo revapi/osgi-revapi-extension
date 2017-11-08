@@ -1,18 +1,19 @@
 package org.revapi.osgi;
 
-import org.revapi.Element;
-import org.revapi.java.spi.JavaTypeElement;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
-import javax.lang.model.element.Name;
-import javax.lang.model.element.TypeElement;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import javax.lang.model.element.Name;
+import javax.lang.model.element.TypeElement;
+
+import org.revapi.Element;
+import org.revapi.java.spi.JavaTypeElement;
 
 final class ExportPackageDefinition {
     private final Set<String> packageNames;

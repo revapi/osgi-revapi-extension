@@ -1,5 +1,13 @@
 package org.revapi.osgi;
 
+import static java.util.Collections.emptySet;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.AbstractMap;
+import java.util.Map;
+
 import org.jboss.dmr.ModelNode;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,13 +19,6 @@ import org.revapi.java.JavaApiAnalyzer;
 import org.revapi.java.spi.JavaTypeElement;
 import org.revapi.java.test.support.Jar;
 import org.revapi.simple.FileArchive;
-
-import java.util.AbstractMap;
-import java.util.Map;
-
-import static java.util.Collections.emptySet;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class ExportPackageFilterTest {
 
