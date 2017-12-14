@@ -1,0 +1,21 @@
+language: java
+jdk:
+  - oraclejdk8
+
+notifications:
+  email: false
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.m2
+
+#delete all our historic build artifacts so that the stale versions do
+#not pollute the build.
+before_script:
+  - rm -Rf $HOME/.m2/repository/org/revapi
+
+script:
+  - mvn clean verify --batch-mode --fail-at-end
+
