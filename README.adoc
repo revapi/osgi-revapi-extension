@@ -1,5 +1,7 @@
 == OSGi Revapi Extension
 
+image:https://travis-ci.org/revapi/osgi-revapi-extension.svg?branch=master["Build Status", link="https://travis-ci.org/revapi/osgi-revapi-extension"]
+
 This library can be used to teach Revapi understand the OSGi bundle definitions.
 
 It understands the `Export-Package` directive in jar files' manifests and will automatically exclude all elements
