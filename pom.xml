@@ -10,6 +10,7 @@
 
     <name>OSGi Revapi Extension</name>
     <description>Provides support for accepting API boundaries defined by OSGi bundles.</description>
+    <url>https://github.com/revapi/osgi-revapi-extension</url>
 
     <properties>
         <revapi.skip>false</revapi.skip>
@@ -45,4 +46,99 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <tagNameFormat>@{project.artifactId}-@{project.version}</tagNameFormat>
+                    <releaseProfiles>release,release-profile</releaseProfiles>
+                    <pushChanges>false</pushChanges>
+                    <preparationGoals>clean verify</preparationGoals>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <organization>
+        <name>Lukas Krejci</name>
+        <url>http://lukas.krejci.pw</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Lukas Krejci</name>
+            <email>lukas@krejci.pw</email>
+            <url>http://lukas.krejci.pw</url>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <issueManagement>
+        <system>github-issues</system>
+        <url>https://github.com/revapi/osgi-revapi-extension/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/revapi/osgi-revapi-extension.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/revapi/osgi-revapi-extension.git</developerConnection>
+        <url>https://github.com/revapi/osgi-revapi-extension</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
