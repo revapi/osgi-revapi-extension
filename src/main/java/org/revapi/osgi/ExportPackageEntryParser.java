@@ -308,7 +308,7 @@ final class ExportPackageEntryParser {
                 state = state.next(c, ctx);
                 if (state == ERROR) {
                     throw new IllegalArgumentException("Could not parse the Export-Package directive. Errored on index "
-                            + i);
+                            + i + " of directive:\n" + directive);
                 }
             }
             state.finalize(ctx);
