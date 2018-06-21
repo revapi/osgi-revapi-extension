@@ -75,8 +75,9 @@ public final class ExportPackageFilter implements ElementFilter {
             }
 
             String directive = manifest.getMainAttributes().getValue("Export-Package");
-
-            ExportPackageEntryParser.parse(directive, exportedPackages);
+            if (directive != null) {
+                ExportPackageEntryParser.parse(directive, exportedPackages);
+            }
         } catch (IOException e) {
             LOG.debug("Failed to open the archive " + archive + " as a jar.", e);
         }
