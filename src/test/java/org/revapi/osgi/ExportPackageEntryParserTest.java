@@ -50,6 +50,18 @@ public class ExportPackageEntryParserTest {
     }
 
     @Test
+    public void testParsesMultiplePackageWithVersionDirective() {
+        test("com.test.api;version=\"23.0.4\";uses:=\"com.fasterxml.jackson.annotation,com.fasterxml.jackson.databind.annotation," +
+                 "freemarker.template,javax.naming.ldap,org.springframework.ldap.core\",com.test.impl;version=\"23.0.4\";uses:=\"com.fasterxml.jackson" +
+                 ".annotation,com.fasterxml.jackson.databind.annotation,freemarker.template,javax.naming.ldap,org.springframework.ldap.core\"", exports -> {
+
+            assertEquals(5, exports.size());
+            assertEquals(exports.stream().filter((ExportPackageDefinition def)-> def.getPackageNames().contains("com.test.api")).count(), 1);
+
+        });
+    }
+
+    @Test
     public void testParsesSinglePackageWithSingleDirective() {
         test("a.b.c;include:=X*", exports -> {
             assertEquals(1, exports.size());

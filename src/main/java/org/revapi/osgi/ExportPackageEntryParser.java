@@ -58,7 +58,7 @@ final class ExportPackageEntryParser {
         EXPORT {
             @Override
             protected ParserState next(char c, Context ctx) {
-                if (Character.isJavaIdentifierStart(c)) {
+                if (Character.isJavaIdentifierStart(c) || c == ',') {
                     ctx.accumulate(c);
                     return PACKAGE;
                 } else if (Character.isWhitespace(c)) {
