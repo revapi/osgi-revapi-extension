@@ -1,11 +1,6 @@
 package org.revapi.osgi;
 
-import static java.util.Collections.emptySet;
-import static java.util.Collections.singleton;
-import static java.util.stream.Collectors.toSet;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -13,7 +8,11 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
-import org.junit.Test;
+import static java.util.Collections.emptySet;
+import static java.util.Collections.singleton;
+import static java.util.stream.Collectors.toSet;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ExportPackageEntryParserTest {
 
@@ -36,6 +35,17 @@ public class ExportPackageEntryParserTest {
             assertEquals(setOf("a.b.c", "d.e.f"), def.getPackageNames());
             assertTrue(def.getIncludes().isEmpty());
             assertTrue(def.getExcludes().isEmpty());
+        });
+    }
+
+    @Test
+    public void testParsesPackageWithVersionDirective() {
+        test("com.test.api;version=\"23.0.4\";uses:=\"com.fasterxml.jackson.annotation,com.fasterxml.jackson.databind.annotation," +
+                 "freemarker.template,javax.naming.ldap,org.springframework.ldap.core\"", exports -> {
+
+            assertEquals(4, exports.size());
+            assertEquals(exports.stream().filter((ExportPackageDefinition def)-> def.getPackageNames().contains("com.test.api")).count(), 1);
+
         });
     }
 

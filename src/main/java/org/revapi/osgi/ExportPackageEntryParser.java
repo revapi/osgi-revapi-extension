@@ -1,13 +1,13 @@
 package org.revapi.osgi;
 
-import static java.util.stream.Collectors.toList;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
 
 final class ExportPackageEntryParser {
     private static final Pattern COMMA = Pattern.compile(",");
@@ -97,6 +97,8 @@ final class ExportPackageEntryParser {
                         if (Character.isJavaIdentifierPart(c)) {
                             ctx.accumulate(c);
                             return PACKAGE;
+                        } else if (c == '"') {
+                            return EXPORT;
                         } else {
                             return ERROR;
                         }
@@ -303,12 +305,14 @@ final class ExportPackageEntryParser {
         static void parsePackage(String directive, Set<ExportPackageDefinition> output) {
             Context ctx = new Context(output);
             ParserState state = EXPORT;
-            for (int i = 0; i < directive.length(); ++i) {
-                char c = directive.charAt(i);
-                state = state.next(c, ctx);
-                if (state == ERROR) {
-                    throw new IllegalArgumentException("Could not parse the Export-Package directive. Errored on index "
-                            + i + " of directive:\n" + directive);
+            if (directive != null) {
+                for (int i = 0; i < directive.length(); ++i) {
+                    char c = directive.charAt(i);
+                    state = state.next(c, ctx);
+                    if (state == ERROR) {
+                        throw new IllegalArgumentException("Could not parse the Export-Package directive. Errored on index "
+                                + i + " of directive:\n" + directive);
+                    }
                 }
             }
             state.finalize(ctx);
