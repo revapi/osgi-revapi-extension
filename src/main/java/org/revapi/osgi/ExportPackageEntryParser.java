@@ -1,13 +1,13 @@
 package org.revapi.osgi;
 
+import static java.util.stream.Collectors.toList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static java.util.stream.Collectors.toList;
 
 final class ExportPackageEntryParser {
     private static final Pattern COMMA = Pattern.compile(",");
@@ -16,7 +16,7 @@ final class ExportPackageEntryParser {
         throw new AssertionError();
     }
 
-    public static void parse(String directive, Set<ExportPackageDefinition> packages) {
+    static void parse(String directive, Set<ExportPackageDefinition> packages) {
         ParserState.parsePackage(directive, packages);
     }
 
@@ -58,7 +58,7 @@ final class ExportPackageEntryParser {
         EXPORT {
             @Override
             protected ParserState next(char c, Context ctx) {
-                if (Character.isJavaIdentifierStart(c) || c == ',') {
+                if (Character.isJavaIdentifierStart(c)) {
                     ctx.accumulate(c);
                     return PACKAGE;
                 } else if (Character.isWhitespace(c)) {
@@ -97,8 +97,6 @@ final class ExportPackageEntryParser {
                         if (Character.isJavaIdentifierPart(c)) {
                             ctx.accumulate(c);
                             return PACKAGE;
-                        } else if (c == '"') {
-                            return EXPORT;
                         } else {
                             return ERROR;
                         }
@@ -267,7 +265,7 @@ final class ExportPackageEntryParser {
                     case '\\':
                         return SKIP_IN_QUOTES_AFTER_ESCAPE;
                     case '"':
-                        return DIRECTIVE_VALUE_START;
+                        return EXPECT_DIRECTIVE_VALUE_END;
                     default:
                         return SKIP_PARAMETER_IN_QUOTES;
                 }
