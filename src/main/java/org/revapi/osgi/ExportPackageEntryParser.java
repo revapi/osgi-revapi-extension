@@ -70,7 +70,7 @@ final class ExportPackageEntryParser {
 
             @Override
             protected void finalize(Context ctx) {
-
+                ctx.exportDone();
             }
         },
         PACKAGE {
