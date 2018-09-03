@@ -4,7 +4,7 @@
 
     <groupId>org.revapi</groupId>
     <artifactId>osgi-revapi-extension</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>0.1.1</version>
 
     <name>OSGi Revapi Extension</name>
     <description>Provides support for accepting API boundaries defined by OSGi bundles.</description>
@@ -91,7 +91,7 @@
         <connection>scm:git:git://github.com/revapi/osgi-revapi-extension.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/revapi/osgi-revapi-extension.git</developerConnection>
         <url>https://github.com/revapi/osgi-revapi-extension</url>
-        <tag>HEAD</tag>
+        <tag>osgi-revapi-extension-0.1.1</tag>
     </scm>
 
     <distributionManagement>
