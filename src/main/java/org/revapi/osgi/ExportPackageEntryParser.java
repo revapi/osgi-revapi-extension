@@ -16,7 +16,7 @@ final class ExportPackageEntryParser {
         throw new AssertionError();
     }
 
-    public static void parse(String directive, Set<ExportPackageDefinition> packages) {
+    static void parse(String directive, Set<ExportPackageDefinition> packages) {
         ParserState.parsePackage(directive, packages);
     }
 
@@ -265,7 +265,7 @@ final class ExportPackageEntryParser {
                     case '\\':
                         return SKIP_IN_QUOTES_AFTER_ESCAPE;
                     case '"':
-                        return DIRECTIVE_VALUE_START;
+                        return EXPECT_DIRECTIVE_VALUE_END;
                     default:
                         return SKIP_PARAMETER_IN_QUOTES;
                 }
@@ -303,12 +303,14 @@ final class ExportPackageEntryParser {
         static void parsePackage(String directive, Set<ExportPackageDefinition> output) {
             Context ctx = new Context(output);
             ParserState state = EXPORT;
-            for (int i = 0; i < directive.length(); ++i) {
-                char c = directive.charAt(i);
-                state = state.next(c, ctx);
-                if (state == ERROR) {
-                    throw new IllegalArgumentException("Could not parse the Export-Package directive. Errored on index "
-                            + i + " of directive:\n" + directive);
+            if (directive != null) {
+                for (int i = 0; i < directive.length(); ++i) {
+                    char c = directive.charAt(i);
+                    state = state.next(c, ctx);
+                    if (state == ERROR) {
+                        throw new IllegalArgumentException("Could not parse the Export-Package directive. Errored on index "
+                                + i + " of directive:\n" + directive);
+                    }
                 }
             }
             state.finalize(ctx);

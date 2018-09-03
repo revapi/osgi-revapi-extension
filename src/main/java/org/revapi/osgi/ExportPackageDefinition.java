@@ -1,19 +1,19 @@
 package org.revapi.osgi;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
+import org.revapi.Element;
+import org.revapi.java.spi.JavaTypeElement;
 
+import javax.lang.model.element.Name;
+import javax.lang.model.element.PackageElement;
+import javax.lang.model.element.TypeElement;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import javax.lang.model.element.Name;
-import javax.lang.model.element.TypeElement;
-
-import org.revapi.Element;
-import org.revapi.java.spi.JavaTypeElement;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 final class ExportPackageDefinition {
     private final Set<String> packageNames;
@@ -52,7 +52,11 @@ final class ExportPackageDefinition {
         JavaTypeElement model = (JavaTypeElement) element;
         TypeElement type = model.getDeclaringElement();
 
-        Name packageName = model.getTypeEnvironment().getElementUtils().getPackageOf(type).getQualifiedName();
+        PackageElement packageOf = model.getTypeEnvironment().getElementUtils().getPackageOf(type);
+        if (packageOf == null) {
+            return false;
+        }
+        Name packageName = packageOf.getQualifiedName();
         Name className = type.getSimpleName();
 
         boolean packageMatches = packageNames.stream().anyMatch(p -> p.contentEquals(packageName));
